@@ -3,6 +3,7 @@ from __future__ import print_function
 import datetime
 import os.path
 import shift_reader
+import argparse
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -13,9 +14,6 @@ from progress.bar import ChargingBar
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar','https://www.googleapis.com/auth/calendar.events']
-
-CALENDAR_NAME='Reperibilità'
-AVAILABILITY_FILE='6.csv'
 
 def get_calendar(gc_service, calendar_name):
     list_result = gc_service.calendarList().list().execute()
@@ -73,10 +71,11 @@ def load_availability(gc_service, calendar, availability):
     print("All {} events created".format(len(availability)))
 
 
-def main():
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
-    """
+def main(args_namespace):
+    
+    CALENDAR_NAME = args_namespace.calendar
+    AVAILABILITY_FILE = args_namespace.event_file
+    
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -139,6 +138,9 @@ def main():
     except HttpError as error:
         print('An error occurred: %s' % error)
 
+parser = argparse.ArgumentParser(description='Load availability in google calendar.')
+parser.add_argument('-c', '--calendar', metavar='CALENDAR_NAME', help='the name of calendar where you want to upload events.', action='store', required=False, default='Reperibilità')
+parser.add_argument('event_file', metavar='EVENT_FILE', help='the CSV file coniainig event to upload.')
 
 if __name__ == '__main__':
-    main()
+    main(parser.parse_args())

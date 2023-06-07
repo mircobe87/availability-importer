@@ -21,7 +21,37 @@ Here an example
 ```
 
 ## Usage
-The input file name is configured by the variable `AVAILABILITY_FILE`.
-The calendar name is specified by the variable `CALENDAR_NAME`.
+1. Clone this repository
+2. Create a folder `.venv` inside the root project folder
+3. Create the virtual environment:
+      ```
+      python -m venv /path/to/.venv
+      ```
+4. Activate the virtual environment running the proper script available in `.venv` folder
+      Platform | Shell      | Command to activate virtual environment
+      ---------|------------|----------------------------------------
+      POSIX    | bash/zsh   | `$ source <venv>/bin/activate`
+      POSIX    | fish       | `$ source <venv>/bin/activate.fish`
+      POSIX    | csh/tcsh   | `$ source <venv>/bin/activate.csh`
+      POSIX    | PowerShell | `$ <venv>/bin/Activate.ps1`
+      Windows  | cmd.exe    | `C:\> <venv>\Scripts\activate.bat`
+      Windows  | PowerShell | `PS C:\> <venv>\Scripts\Activate.ps1`
+5. Install all dependencies
+      ```
+      pip install -r requirements.txt
+      ```
+6. Run the application
 
-Check those 2 variables and run the main file `availability-importer.py`.
+```
+usage: availability-importer.py [-h] [-c CALENDAR_NAME] EVENT_FILE
+
+Load availability in google calendar.
+
+positional arguments:
+  EVENT_FILE            the CSV file coniainig event to upload.
+
+options:
+  -h, --help            show this help message and exit
+  -c CALENDAR_NAME, --calendar CALENDAR_NAME
+                        the name of calendar where you want to upload events.
+```
